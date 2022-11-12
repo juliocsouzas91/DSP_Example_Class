@@ -1,12 +1,10 @@
 #Define the images parameters
 import matplotlib
 import numpy as np 
-def signal_simulation(tempo_amostrando):
-        fc = 440 #frequência do sinal
-        fs = 8800000 #frequência de amostragem
-        periodo_amostral = 1/fs
+def signal_simulation(fc,fs,tempo_amostrando):
         n_samples = np.arange(0,fs*tempo_amostrando, 1)
-        sinal_senoidal = np.sin(2*np.pi*fc/fs*n_samples)
-        t = (1/fs)*n_samples
-        
+        sinal_senoidal = np.zeros(n_samples.size)
+        for aux1 in fc:
+                sinal_senoidal += np.sin(2*np.pi*aux1/fs*n_samples)
+        t = (1/fs)*n_samples        
         return t,sinal_senoidal
