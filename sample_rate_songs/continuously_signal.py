@@ -2,7 +2,7 @@
 import matplotlib
 import numpy as np 
 def signal_simulation(fc, fs, tempo_amostrando, phase=0):
-        n_samples = np.arange(0,fs*tempo_amostrando, 1)
+        n_samples = np.arange(0,int(np.round(tempo_amostrando*fs)), 1)
         sinal_senoidal = np.zeros(n_samples.size)
 
         for aux1 in fc:
