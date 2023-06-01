@@ -28,7 +28,7 @@ A4 = create_hamonic_signal(440, fs, signal_size);
 C_Sharp = create_hamonic_signal(554.37, fs, signal_size);
 E = create_hamonic_signal(659.25, fs, signal_size);
 
-note2 = A4+C_Sharp+E;
+note2 = A4+C_Sharp+E+sin(2*pi*108/fs.*n)+.1*sin(2*pi*216/fs.*n)+.5*sin(2*pi*433.36/fs.*n)+.17*sin(2*pi*325/fs.*n);
 atenuation = 0.99998.^n;
 note2 = note2.*atenuation;
 note2=note2/max(note2);
@@ -38,8 +38,14 @@ sound(note2,fs)
 A4 = sin(2*pi*108/fs.*n)+.1*sin(2*pi*216/fs.*n)+.5*sin(2*pi*433.36/fs.*n)+.17*sin(2*pi*325/fs.*n);
 A4 = A4/max(A4);
 sound(A4,fs)
+
+%% Open Guitar note 
+load Nota_A.mat
+data = data(:,1)';
+data = data(1,25000:end);
+sound(data,fs);
 %% Criando um filtro passa baixas
-Wn = 0.11; 
+Wn = 0.0181; 
 a = 1 ;
 b = fir1(50,Wn);
 note2_f = filter(b,1,note2);
@@ -55,9 +61,16 @@ plot(freqHz,seg)
 
 %% High Pass Filter
 
-Wn = 0.05; 
+Wn = 0.0181; 
 a = 1 ;
-b = fir1(50,Wn,'high');
-dat2 = filter(b,1,data(:,1));
+b = fir1(500,Wn,'high');
+dat2 = filter(b,1,data);
+dat2 = dat2/max(dat2);
+
+Wn = 0.0227; 
+a = 1 ;
+b = fir1(50,Wn);
+
+dat2 = filter(b,1,dat2);
 dat2 = dat2/max(dat2);
 sound(dat2,fs)
