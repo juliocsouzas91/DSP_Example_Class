@@ -74,3 +74,46 @@ b = fir1(50,Wn);
 dat2 = filter(b,1,dat2);
 dat2 = dat2/max(dat2);
 sound(dat2,fs)
+
+%% Criando um filtro passa baixas
+
+a = 1 ;
+M = 500
+[n,Wn,bta,filtype] = kaiserord( 2*[180 210], [1 0], [0.01 0.1], fs );
+b = fir1(n, Wn, filtype, kaiser(n+1,bta), 'noscale');
+freqz(b, a);
+
+
+
+Wn = 2*[80 120]/fs; 
+b = fir1(M,Wn);
+note2_f1 = filter(b,1,note2);
+
+Wn = 2*[140 250]/fs; 
+b = fir1(M,Wn);
+note2_f2= 4*filter(b,1,note2);
+
+Wn = 2*[470 550]/fs; 
+b = fir1(M,Wn);
+note2_f3= filter(b,1,note2);
+
+Wn = 2*[450 650]/fs; 
+b = fir1(M,Wn);
+note2_f4= filter(b,1,note2);
+
+note2_f = note2_f2 + note2_f1+note2_f3+note2_f4;
+
+note2_f = note2_f/max(note2_f);
+
+sound(note2_f, fs)
+
+
+%% High Pass Filter
+
+Wn = 2*5000/fs; 
+a = 1 ;
+b = fir1(500,Wn,'high');
+dat2 = filter(b,1,note2);
+dat2 = dat2/max(dat2);
+
+sound(dat2,fs)
