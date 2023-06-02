@@ -16,8 +16,10 @@ clc;close all;clear all
 %% Apresentando o Sinal %%
 fs = 44100;
 n = 0:1:2*fs;
+
 signal_size = length(n);
 
+note = sin(2*pi*330/fs*n)+0.5* sin(2*pi*1500/fs*n);
 note = sin(2*pi*440/fs*n)+.001*sin(2*pi*30*440/fs*n)+0.25.*sin(2*pi*3*440/fs*n)+0.125.*sin(2*pi*8*440/fs*n)+0.125.*sin(2*pi*20*440/fs*n)+0.125/10.*sin(2*pi*12*440/fs*n);
 note1 = (sin(2*pi*659.25/fs*n)+sin(2*pi*523.25/fs*n)+sin(2*pi*78399/fs*n));
 note2 = (sin(2*pi*659.25/fs*n)+sin(2*pi*523.25/fs*n + pi/5)+sin(2*pi*783.99/fs*n));
@@ -77,14 +79,14 @@ sound(dat2,fs)
 
 %% Criando um filtro passa baixas
 
-a = 1 ;
-M = 500
-[n,Wn,bta,filtype] = kaiserord( 2*[180 210], [1 0], [0.01 0.1], fs );
-b = fir1(n, Wn, filtype, kaiser(n+1,bta), 'noscale');
-freqz(b, a);
+% a = 1 ;
+% M = 500;
+% [n,Wn,bta,filtype] = kaiserord( 2*[180 210], [1 0], [0.01 0.1], fs );
+% b = fir1(n, Wn, filtype, kaiser(n+1,bta), 'noscale');
+% freqz(b, a);
 
 
-
+M = 500;
 Wn = 2*[80 120]/fs; 
 b = fir1(M,Wn);
 note2_f1 = filter(b,1,note2);
@@ -111,8 +113,10 @@ sound(note2_f, fs)
 %% High Pass Filter
 
 Wn = 2*5000/fs; 
+
 a = 1 ;
 b = fir1(500,Wn,'high');
+
 dat2 = filter(b,1,note2);
 dat2 = dat2/max(dat2);
 
