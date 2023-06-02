@@ -1,0 +1,77 @@
+[33mcommit 5da7ef312872a94b5493d807a3f44f64e8bc485e[m[33m ([m[1;36mHEAD[m[33m)[m
+Author: Julio Souza <Juliocsouzas91@gmail.com>
+Date:   Wed May 10 11:52:23 2023 -0300
+
+    Atualização da versão functioncando
+
+[33mcommit 64f156a479492e99a6fc0e911596c7081792482d[m
+Author: Julio Souza <Juliocsouzas91@gmail.com>
+Date:   Tue May 9 09:27:42 2023 -0300
+
+    Implementado o exercício para a pós graduacao na pasta filtro música e também foi inserido o sinal de ECG que pode ser trabalhado como outro exercício de filtros
+
+[33mcommit 4c44ccbd6b352ebad42071cb05b6227ad9a735bf[m
+Author: Julio Souza <Juliocsouzas91@gmail.com>
+Date:   Thu May 4 07:25:15 2023 -0300
+
+    Exemplo do uso de filtros em música
+
+[33mcommit 020dcc4bee2a9f49661bd85447e33ecfd2dbdde3[m
+Author: Julio Souza <Juliocsouzas91@gmail.com>
+Date:   Tue Mar 7 00:09:46 2023 -0300
+
+    definido a biblioteca para tocar e manipular o arquivo de som
+
+[33mcommit 58e198a85a3622e039e1df72ddd9fdbd38e0c607[m
+Author: Julio Souza <Juliocsouzas91@gmail.com>
+Date:   Mon Mar 6 14:35:02 2023 -0300
+
+    Adicionado a Função para calclular a FFT de qualquer sequencia x, variando o número de pontos
+
+[33mcommit f38021670ecd9f10ba8ae612a7ca33d19dc7a2cc[m
+Author: Julio Souza <Juliocsouzas91@gmail.com>
+Date:   Mon Mar 6 13:39:52 2023 -0300
+
+    Novo exemplo com numero de pontos da DFS e animação dessa variação
+
+[33mcommit 5cd7c08ac6af41872042e6198ef3490ae84d5523[m
+Author: Julio Souza <Juliocsouzas91@gmail.com>
+Date:   Sat Nov 19 12:27:10 2022 -0300
+
+    Criado o filtro passa baixa utilizado após a conversão do sinal de digital para analógico
+
+[33mcommit 2c3becff7aa7b2435da716f759c8f02d26011a00[m
+Author: Julio Souza <Juliocsouzas91@gmail.com>
+Date:   Fri Nov 18 23:00:28 2022 -0300
+
+    Foi-se desenvolvido a função que simula o conversor D2A e criou-se uma ilustração do processo
+
+[33mcommit 965fada5ebf71a5e85c8b882ada520b221cf36cb[m
+Author: Julio Souza <Juliocsouzas91@gmail.com>
+Date:   Wed Nov 16 21:45:39 2022 -0300
+
+    Foi-se definido a frequência de amostragem do sinal de 440 hz para 1000 hz, na qual foi ilustrado os pontos adquiridos, ilustrando que o sinal está irreconhecível
+
+[33mcommit 406e9d39622ff8b283ebade4aa3d9e2011df91c7[m
+Author: Julio Souza <Juliocsouzas91@gmail.com>
+Date:   Wed Nov 16 21:20:47 2022 -0300
+
+    Criado rotina para ilustrar o processo de amostragem. A frequencia de amostragem é variável e pode-se adicionar uma defasagem na amostragem
+
+[33mcommit d8e4eec8e8407fce0222bb95ab2d4e1c2b9c2ffd[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: Julio Souza <Juliocsouzas91@gmail.com>
+Date:   Sat Nov 12 12:20:10 2022 -0300
+
+    Created the function to simulate the sampling method varing the sampling frequency. It uses the animate function in matplotlib.
+
+[33mcommit 13318e1ae41b6042dcdfc3bfd070e205a348e18c[m
+Author: Julio Souza <Juliocsouzas91@gmail.com>
+Date:   Sat Nov 12 08:36:14 2022 -0300
+
+    Creating a function plotting setting to configure the plot, created a function to illustrate the sampling
+
+[33mcommit f45bc6a21c21267f481a7b7fe8a7206575fc8bd2[m
+Author: Julio Souza <Juliocsouzas91@gmail.com>
+Date:   Fri Nov 11 11:26:46 2022 -0300
+
+    Add files to github
