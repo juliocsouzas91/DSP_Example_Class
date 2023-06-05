@@ -167,39 +167,33 @@ xlabel("Amostras [n]")
     axis([0,15000,0,1])
     sound(sinal, fs)
 
-%% Desenho de um filtro passa baixas - FIR.  
+%Desenho de um filtro passa baixas - FIR. Comando 
 %Especificações:
     % fsampling = 44100
     % fc = 1100 -> 2*1.1k/44k %Frequência de corte 
     % fs = 1300k %Faixa de rejeição
     % fp = 900 %Faixa de passagem
     
+
     wc = 2*1*10^3*pi/fs;
     ws = 2*1.3*10^3*pi/fs;
-    wp = 2*.7*10^3*pi/fs;
+    wp = 2*.9*10^3*pi/fs;
 
     freq_win = [0.9 3.1 3.3 5.5];
     M = 2*pi.*freq_win/(ws-wp);
     M = ceil(M);
-    filtro_type = 4;
+    filtro_type = 1;
 
     n = 0:1:M(filtro_type);
     M = M(filtro_type);
     hd = wc/pi .* sinc((wc/pi).*(n-M/2));
-    if(filtro_type==2)
-        h = hd.*hanning(M+1)';
-    elseif(filtro_type==3)
-        h = hd.*hamming(M+1)';
-    elseif(filtro_type==4)
-        h = hd.*blackman(M+1)';
-    end
 % Análise Fourier do filtro
     clf()   
-    freqz(h,1)
-    %plot((0:2^15-1).*fs/2^15,abs(fft(h,2^15))) %Plot resp mag filtro
+    freqz(hd,1)
+    plot((0:2^15-1).*fs/2^15,abs(fft(hd,2^15))) %Plot resp mag filtro
 %Análise Fourier do sinal Filtrado
     N_fft = 2^15;
-    sig_filt = filter(h,1,sinal);
+    sig_filt = filter(hd,1,sinal);
 
     sinal_seg = sig_filt(1,1:7*401);
     X_axis_fs = (0:N_fft-1).* (fs/N_fft);
@@ -215,47 +209,24 @@ xlabel("Amostras [n]")
     xlabel("frequências [Hz]")
     axis([0,15000,0,1])
     sound(sig_filt, fs)
-
+    sound(sig_filt_blackman-mean(sig_filt_blackman), fs)
 
 %Desenho de um filtro passa altas - FIR
 
     wc = 2*1*10^3*pi/fs;
-    ws = 2*1.4*10^3*pi/fs;
-    wp = 2*.7*10^3*pi/fs;
+    ws = 2*1.3*10^3*pi/fs;
+    wp = 2*.9*10^3*pi/fs;
 
     freq_win = [0.9 3.1 3.3 5.5];
     M = 2*pi.*freq_win/(ws-wp);
     M = ceil(M);
-    filtro_type = 2;
+    filtro_type = 1;
 
     n = 0:1:M(filtro_type);
     M = M(filtro_type);
     hd = sinc((n-M/2)) - wc/pi .* sinc((wc/pi).*(n-M/2));
-    if(filtro_type==2)
-        h = hd.*hanning(M+1)';
-    elseif(filtro_type==3)
-        h = hd.*hamming(M+1)';
-    elseif(filtro_type==4)
-        h = hd.*blackman(M+1)';
-    end
 % Análise Fourier do filtro
     clf()   
-    freqz(h,1)
-    %plot((0:2^15-1).*fs/2^15,abs(fft(hd,2^15))) %Plot resp mag filtro
-    N_fft = 2^15;
-    sig_filt = filter(h,1,sinal);
+    freqz(hd,1)
+    plot((0:2^15-1).*fs/2^15,abs(fft(hd,2^15))) %Plot resp mag filtro
 
-    sinal_seg = sig_filt(1,1:7*401);
-    X_axis_fs = (0:N_fft-1).* (fs/N_fft);
-    
-    Mag_resp = abs( fft( sinal_seg.* hanning(length(sinal_seg) )', N_fft) );
-    Mag_resp = Mag_resp/max(Mag_resp);
-
-    figure(3);
-    
-    clf()
-    title('DTFT')
-    plot(X_axis_fs,Mag_resp','ob')
-    xlabel("frequências [Hz]")
-    axis([0,15000,0,1])
-    sound(sig_filt, fs)
