@@ -1,6 +1,9 @@
 function [X_axis,Mag_resp] = spectral_hanning_response(signal, fs, N_size)
-    % Spectral_hanning_response Summary of this function goes here
-    %   Detailed explanation goes here
+    % Spectral_hanning_response 
+    % signal
+    % fs - sampling frequency
+    % N_size - Number of elements in the fft
+    
     [n_lin,n_col]  =  size(signal);
     
     signal = reshape(signal, max(n_lin,n_col), min(n_lin,n_col));
