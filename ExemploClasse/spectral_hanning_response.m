@@ -22,6 +22,10 @@ function [X_axis,Mag_resp] = spectral_hanning_response(signal, fs, N_size)
     theta = (X_axis/max(X_axis)) * 2 * pi;
     max(theta)
     %polarplot(theta,Mag_resp,'ob')
-    plot(X_axis,Mag_resp)
+    figure()
+    set(gcf, 'Units', 'Normalized', 'OuterPosition', [0 0 1 1]);
+
+    plot(X_axis,Mag_resp,'b')
+    axis([0,5000,0,1.1])
 end
 
