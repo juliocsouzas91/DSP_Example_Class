@@ -1,4 +1,4 @@
-function [X_axis,Mag_resp] = spectral_hanning_response(signal, fs, N_size)
+function [X_axis,Mag_resp] = spectral_hanning_response(signal, fs, N_size,sound_example)
     % Spectral_hanning_response 
     % signal
     % fs - sampling frequency
@@ -20,15 +20,19 @@ function [X_axis,Mag_resp] = spectral_hanning_response(signal, fs, N_size)
 
     Mag_resp = Mag_resp/max(Mag_resp);
 
-    Mag_resp = Mag_resp(1:int32(N_size*5000/fs));
-    X_axis = X_axis(1:int32(N_size*5000/fs));
-    theta = (X_axis/max(X_axis)) * 2 * pi;
-    max(theta)
-    %polarplot(theta,Mag_resp,'ob')
-    figure()
-    set(gcf, 'Units', 'Normalized', 'OuterPosition', [0 0 1 1]);
-
-    plot(X_axis,Mag_resp,'b')
-    axis([0,5000,0,1.1])
+    if (sound_example)
+        Mag_resp = Mag_resp(1:int32(N_size*5000/fs));
+        X_axis = X_axis(1:int32(N_size*5000/fs));
+        figure()
+        set(gcf, 'Units', 'Normalized', 'OuterPosition', [0 0 1 1]);
+        plot(X_axis,Mag_resp,'b')
+        axis([0,5000,0,1.1])
+    else
+        Mag_resp = Mag_resp(1:int32(N_size/2));
+        X_axis = X_axis(1:int32(N_size/2));
+        figure()
+        set(gcf, 'Units', 'Normalized', 'OuterPosition', [0 0 1 1]);
+        plot(X_axis,Mag_resp,'b')
+    end
 end
 

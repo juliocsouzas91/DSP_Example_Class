@@ -22,13 +22,13 @@ set(groot,'defaultAxesFontSize',24);
     plot(n,y1,'ob')
     hold 
     plot(n,y2,'or')
-    xlabel("Amostras [n]")
-    legend("0.02\pi = 440 Hz","0.01\pi = 220 Hz")
+    xlabel('Amostras [n]')
+    legend('0.02\pi = 440 Hz','0.01\pi = 220 Hz')
     saveas(gcf,'Imagens\sinal_introducao.png')
     
     nexttile
     plot(n,y1+y2,'ok')
-    xlabel("Amostras [n]")
+    xlabel('Amostras [n]')
 
 
 %% Análise Espectral - Exemplo 2
@@ -40,7 +40,7 @@ set(groot,'defaultAxesFontSize',24);
     sinal =  sin(2*pi*f1/fs.*n) + sin(2*pi*f2/fs.*n) ;
     figure(2)
     plot(sinal,'b')
-    legend("Dimensão do sinal 200")
+    legend('Dimensão do sinal 200')
 %Calculo da DTFT com 256 pontos
     N_fft = 256;
 
@@ -61,14 +61,14 @@ set(groot,'defaultAxesFontSize',24);
     axis([0,1000*2/fs,0,1])
     %ylim([-0.1 1.1])
     ax1.XAxisLocation = 'bottom';
-    xlabel("\omega")
+    xlabel('\omega')
     
     ax2 = axes(t);
     plot(ax2,X_axis_fs,Mag_resp','or')
     ax2.XAxisLocation = 'top';
     ax2.YAxisLocation = 'right';
     ax2.Color = 'none';
-    xlabel("frequências [Hz]")
+    xlabel('frequências [Hz]')
     title('DTFT')
     axis([0,1000,0,1])
 
@@ -86,7 +86,7 @@ set(groot,'defaultAxesFontSize',24);
     clf()
     title('DTFT')
     plot(X_axis_fs,Mag_resp','or')
-    xlabel("frequências [Hz]")
+    xlabel('frequências [Hz]')
     axis([0,1000,0,1])
     %Obs : Não conseguimos identificar corretamente as frequências do meu
     %sinal f1 e f2, mesmo aumentando o número de pontos para o cálculo da
@@ -123,7 +123,7 @@ set(groot,'defaultAxesFontSize',24);
     clf()
     title('DTFT')
     plot(X_axis_fs,Mag_resp','or')
-    xlabel("frequências [Hz]")
+    xlabel('frequências [Hz]')
     axis([0,1000,0,1])
     %Espectro com 2 componentes em 220hz e 440hz
 %% Filtros - Exemplo 3
@@ -141,11 +141,11 @@ set(groot,'defaultAxesFontSize',24);
     figure(1)
     clf()
     subplot(2,1,1)
-    title("Sinal no tempo")
+    title('Sinal no tempo')
     stem(sinal,'ob')
     axis([0,401,-1,1])
     subplot(2,1,2)
-    title("Sinal no tempo - pontos interligados")
+    title('Sinal no tempo - pontos interligados')
     plot(sinal,'b')
     axis([0,401,-1,1])
     
@@ -163,7 +163,7 @@ set(groot,'defaultAxesFontSize',24);
     clf()
     title('DTFT')
     plot(X_axis_fs,Mag_resp','ob')
-    xlabel("frequências [Hz]")
+    xlabel('frequências [Hz]')
     axis([0,15000,0,1])
     sound(sinal, fs)
 
@@ -217,7 +217,7 @@ set(groot,'defaultAxesFontSize',24);
     clf()
     title('DTFT')
     plot(X_axis_fs, Mag_resp,'ob', X_axis_fs, Mag_resp_lp, 'or', freq_win_lp, abs(filter_response),'r')
-    xlabel("frequências [Hz]")
+    xlabel('frequências [Hz]')
     axis([0,15000,0,1.1])
     sound(sig_filt/max(sig_filt), fs)
 
@@ -271,22 +271,31 @@ set(groot,'defaultAxesFontSize',24);
     clf()
     title('DTFT')
     plot(X_axis_fs, Mag_resp,'ob', X_axis_fs, Mag_resp_hp, 'or', freq_win_hp, abs(filter_response_hp), 'g')
-    xlabel("frequências [Hz]")
+    xlabel('frequências [Hz]')
     axis([0,15000 ,0,1.1])
     sound(sig_filt_hp/max(sig_filt_hp), fs)
     sound(sig_filt/max(sig_filt), fs)
  %% Desenho filtro IIR - Passa Baixas
-  %load ECG sinal, aplica um filtro FIR passa banda e um filtro IIR
+  % Exempplo um sinal ECG do physionet
+  % Licença - https://physionet.org/content/mitdb/view-license/1.0.0/
+  % load ECG sinal, aplica um filtro FIR passa banda e um filtro IIR
   %Butterworth.
-  
+
 %Espectificações do filtro FIR PB
-   load ('ECG_signal.mat')
-   ECG_data = ECG_data(1,50000:100000);
-   fs = 360;
- %FIR Passa baixas
-    f_cut = 45;
-    f_stop = 50;
-    f_pass = 40;
+    load ('ECG_data_105.mat')
+    fs = 360;
+    ECG_data = ECG_data/max(ECG_data);
+    spectral_hanning_response(ECG_data,fs,2^15,0);
+ %FIR Passa baixas 
+     %A Review of electrocardiogram filtering
+     % 0.67 Hz that corresponds to a heart rate of 40 beats per
+     %minute (bpm), and a 1-mV·s testing impulse for displacement 
+     % and slope evaluation. Also, it requires less than 0.5-dB
+     % ripple over the range of 1 to 30 Hz
+
+    f_cut = 38;
+    f_stop = 40;
+    f_pass = 36;
 
     wc = 2*f_cut*pi/fs;
     ws = 2*f_stop*pi/fs;
@@ -301,14 +310,16 @@ set(groot,'defaultAxesFontSize',24);
     h_lp = hd.*hanning(M+1)';
 
 % Resposta do Filtro
+
     [filter_response_lp, freq_win_lp] = filter_visualization(h_lp,1,fs);
-    title("Resposta Filtro Passa Baixas")
+    title('Resposta Filtro Passa Baixas')
+
 
     ECG_data_lp = filter(h_lp,1,ECG_data);
  %FIR Passa altas
-    f_cut = 1;
-    f_stop = 2;
-    f_pass = 0;
+    f_cut = 0.5;
+    f_stop = .9;
+    f_pass = .1;
 
     wc = 2*f_cut*pi/fs;
     ws = 2*f_stop*pi/fs;
@@ -321,8 +332,10 @@ set(groot,'defaultAxesFontSize',24);
     n = 0:1:M;
     hd = sinc((n-M/2)) - wc/pi .* sinc( (wc/pi).*(n-M/2) );
     h_hp = hd.*hanning(M+1)';
+    
+
     [filter_response_hp, freq_win_hp] = filter_visualization(h_hp ,1,fs);
-    title("Resposta Filtro Passa Altas")
+    title('Resposta Filtro Passa Altas')
     ECG_data_hp = filter(h_hp,1,ECG_data_lp);
 
     figure()
@@ -330,36 +343,40 @@ set(groot,'defaultAxesFontSize',24);
     plot(ECG_data,'b')
     hold
     plot(ECG_data_hp(1,int32((M_hp+M_lp))/2:end),'r')
-
+    plot(ECG_data_hp,'r')
+    spectral_hanning_response(ECG_data_hp,fs,2^15,0);
     %% Fim do FIR 
-
-    Rp = 0.42;
-    Rs = 45;
+    %% Filtro IIR
+    Rp = .5;
+    Rs = 35;
 
     deltap = 10^(Rp/20) - 1
     deltas = 10^(-Rs/20)
     
-    f_stop = 1.4e3;
-    f_pass = 0.5e3;
-    
+    f_stop = 43;
+    f_pass = 37;
+  % Filtro IIR
+    Rp1 = -20*log10((1-deltap)/(1+deltap));
+    Rs1 = -20*log10(deltas/(1+deltap));    
+
     ws = 2*f_stop/fs;
     wp = 2*f_pass/fs;
-      % Filtro IIR
-    Rp1 = -20*log10((1-deltap)/(1+deltap));
-    Rs1 = -20*log10(deltas/(1+deltap));
+
+
     
     % butterworth
-    [N_b, Wn_b] = buttord(wp, ws, Rp1, Rs1);
-    [b_b,a_b] = butter(N_b, Wn_b);
+    [N_b_lp, Wn_b_lp] = buttord(wp, ws, Rp, Rs);
+    [b_b_lp, a_b_lp] = butter(N_b_lp, Wn_b_lp);
     % Análise Fourier do filtro
     
-    [filter_response_b_lp, freq_win_b_lp] = filter_visualization(b_b,a_b,fs); 
+    [filter_response_b_lp, freq_win_b_lp] = filter_visualization(b_b_lp, a_b_lp, fs); 
 
-    x_IIR_lp = filter(b_b, a_b, sinal);
+    ECG_data_b_lp = filter(b_b_lp, a_b_lp, ECG_data);
+
     N_fft = 2^15;
 
     X_axis_fs = (0:N_fft-1).* (fs/N_fft);
-    sinal_seg = x_IIR(1,1:7*401);
+    sinal_seg = ECG_data_b_lp(1,1:7*401);
     Mag_resp_hp = abs( fft( sinal_seg.* hanning(length(sinal_seg) )', N_fft) );
     Mag_resp_hp = Mag_resp_hp/max(Mag_resp_hp);
 
@@ -368,7 +385,7 @@ set(groot,'defaultAxesFontSize',24);
     clf()
     title('DTFT')
     plot(X_axis_fs, Mag_resp,'ob', X_axis_fs, Mag_resp_hp, 'or', freq_win_b_lp, abs(filter_response_b_lp), 'g')
-    xlabel("frequências [Hz]")
+    xlabel('frequências [Hz]')
     axis([0,15000 ,0,1.1])
     sound(x_IIR_lp,fs)
 
@@ -381,8 +398,8 @@ set(groot,'defaultAxesFontSize',24);
     deltap = 10^(Rp/20) - 1
     deltas = 10^(-Rs/20)
     
-    f_stop = 20;
-    f_pass = 80;
+    f_stop = 0.1;
+    f_pass = 0.9;
     
     ws = 2*f_stop/fs;
     wp = 2*f_pass/fs;
@@ -391,13 +408,13 @@ set(groot,'defaultAxesFontSize',24);
     Rs1 = -20*log10(deltas/(1+deltap));
     
     % butterworth
-    [N_b, Wn_b] = buttord(wp, ws, Rp1, Rs1);
-    [b_b,a_b] = butter(N_b, Wn_b,'high');
+    [N_b_hp, Wn_b_hp] = buttord(wp, ws, Rp1, Rs1);
+    [b_b_hp,a_b_hp] = butter(N_b_hp, Wn_b_hp,'high');
     % Análise Fourier do filtro
     
-    [filter_response_b_lp, freq_win_b_lp] = filter_visualization(b_b,a_b,fs); 
+    [filter_response_b_lp, freq_win_b_lp] = filter_visualization(b_b_hp,a_b_hp,fs); 
 
-    x_IIR_hp = filter(b_b, a_b, x_IIR_lp);
+    ECG_data_b_hp = filter(b_b_hp, a_b_hp, ECG_data_b_lp);
     N_fft = 2^15;
 
     X_axis_fs = (0:N_fft-1).* (fs/N_fft);
@@ -410,8 +427,13 @@ set(groot,'defaultAxesFontSize',24);
     clf()
     title('DTFT')
     plot(X_axis_fs, Mag_resp,'ob', X_axis_fs, Mag_resp_hp, 'or', freq_win_b_lp, abs(filter_response_b_lp), 'g')
-    xlabel("frequências [Hz]")
+    xlabel('frequências [Hz]')
     axis([0,15000 ,0,1.1])
     sound(x_IIR_hp,fs)
 
-
+    figure()
+    set(gcf, 'Units', 'Normalized', 'OuterPosition', [0 0 1 1]);
+    
+    plot(ECG_data_b_hp(1,int32(N_b_hp+N_b_lp)/2:end),'b')
+    hold
+    plot(ECG_data_hp(1,int32((M_hp+M_lp))/2:end),'r')
