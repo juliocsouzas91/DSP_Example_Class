@@ -347,7 +347,7 @@ set(groot,'defaultAxesFontSize',24);
     [filter_response_hp, freq_win_hp] = filter_visualization(h_hp ,1,fs);
     title('Resposta Filtro Passa Altas')
     ECG_data_hp = filter(h_hp,1,ECG_data_lp);
-plotar = 0;
+plot = 0;
 if (plotar)
     figure()
     set(gcf, 'Units', 'Normalized', 'OuterPosition', [0 0 1 1]);
@@ -360,8 +360,8 @@ end
 %% Fim do FIR 
 %% Filtro IIR - Passa baixas 
    
-    f_stop = 46; %Hz
-    f_pass = 36;
+    f_stop = 45; %Hz
+    f_pass = 35;
   % Filtro IIR
     Rp = .05; %dB
     Rs = 44;    
@@ -371,7 +371,7 @@ end
    
     % butterworth
     [N_b_lp, Wn_b_lp] = buttord(wp, ws, Rp, Rs);
-    [b_b_lp, a_b_lp] = butter(N_b_lp, Wn_b_lp,'low');
+    [b_b_lp, a_b_lp] = butter(N_b_lp, Wn_b_lp);
 %% Análise em frequência do filtro
     
     [filter_response_b_lp, freq_win_b_lp] = filter_visualization(b_b_lp, a_b_lp, fs); 

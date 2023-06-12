@@ -1,8 +1,10 @@
-function [X_axis,Mag_resp] = spectral_hanning_response(signal, fs, N_size,sound_example)
+function [X_axis,Mag_resp] = spectral_hanning_response(signal, fs, N_size,sound_example,db_graph)
     % Spectral_hanning_response 
     % signal
     % fs - sampling frequency
     % N_size - Number of elements in the fft
+    % sound_example - flag to adequate the plot for sound
+    % dB - dB plof.
     
     [n_lin,n_col]  =  size(signal);
     
@@ -25,14 +27,24 @@ function [X_axis,Mag_resp] = spectral_hanning_response(signal, fs, N_size,sound_
         X_axis = X_axis(1:int32(N_size*5000/fs));
         figure()
         set(gcf, 'Units', 'Normalized', 'OuterPosition', [0 0 1 1]);
-        plot(X_axis,Mag_resp,'b')
-        axis([0,5000,0,1.1])
+        if(db_graph)
+            plot(X_axis,20*log10(Mag_resp),'b')
+            axis([0,5000,-40,0])
+        else
+            plot(X_axis,Mag_resp,'b')
+            axis([0,5000,0,1.1])
+        end
     else
         Mag_resp = Mag_resp(1:int32(N_size/2));
         X_axis = X_axis(1:int32(N_size/2));
         figure()
         set(gcf, 'Units', 'Normalized', 'OuterPosition', [0 0 1 1]);
-        plot(X_axis,Mag_resp,'b')
+        if(db_graph)
+            plot(X_axis,20*log10(Mag_resp),'b')
+        else
+            plot(X_axis,Mag_resp,'b')
+        end
+        
     end
 end
 
